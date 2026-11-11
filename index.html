@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lamport Clock Visualizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div><div class="eyebrow">DISTRIBUTED SYSTEMS LAB</div><h1>Lamport Clock Visualizer</h1></div>
+  <span class="live"><i></i> Interactive simulator</span>
+</header>
+<main>
+  <section class="intro">
+    <div><h2>Understand event ordering.</h2><p>Simulate independent processes, exchange messages, and watch logical clocks preserve causality.</p></div>
+    <button id="demoBtn" class="secondary">Load demo scenario</button>
+  </section>
+
+  <section class="panel">
+    <div class="section-heading"><div><span class="step">01</span><h3>Processes</h3></div><span class="muted">Up to 8 processes</span></div>
+    <div class="process-controls">
+      <input id="processNames" value="P1, P2, P3" aria-label="Process names">
+      <button id="applyProcesses" class="secondary">Apply processes</button>
+    </div>
+    <div id="clockCards" class="clock-grid"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-heading"><div><span class="step">02</span><h3>Generate an event</h3></div></div>
+    <div class="event-form">
+      <label>Process<select id="processSelect"></select></label>
+      <label>Event type<select id="kindSelect"><option>Internal</option><option>Send</option></select></label>
+      <label id="receiverWrap" class="hidden">Receiver<select id="receiverSelect"></select></label>
+      <label class="wide">Description<input id="detailInput" placeholder="e.g. Send sensor data" maxlength="80"></label>
+      <button id="addEvent" class="primary">Add event</button>
+    </div>
+    <p class="hint">Receive events are created automatically when a message is sent.</p>
+    <div id="error" class="error"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-heading"><div><span class="step">03</span><h3>Process timelines</h3></div><span class="muted">Local event sequence</span></div>
+    <div id="timelines" class="timelines empty">Add an event or load the demo to see the timelines.</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-heading"><div><span class="step">04</span><h3>Global event order</h3></div><span class="muted">Sorted by timestamp, then process</span></div>
+    <div class="table-wrap"><table><thead><tr><th>Clock</th><th>Process</th><th>Event</th><th>Description</th></tr></thead><tbody id="eventRows"><tr><td colspan="4" class="empty-cell">No events yet.</td></tr></tbody></table></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-heading"><div><span class="step">05</span><h3>Causality check</h3></div></div>
+    <div id="consistency" class="check-result neutral">Run a simulation to check message ordering.</div>
+    <div id="checks"></div>
+  </section>
+  <footer>Lamport Logical Clock Simulator · LC1, LC2 and LC3</footer>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
